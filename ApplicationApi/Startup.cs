@@ -36,7 +36,8 @@ namespace ApplicationApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //TODO: Pending enable https
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
