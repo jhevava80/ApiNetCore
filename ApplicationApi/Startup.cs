@@ -30,13 +30,18 @@ namespace ApplicationApi
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+
             });
             services.AddControllers();
+            services.AddCors();
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // It is important the order
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -46,6 +51,9 @@ namespace ApplicationApi
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //app.UseCors(x => x.WithOrigins());
+            app.UseCors( x=> x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 
